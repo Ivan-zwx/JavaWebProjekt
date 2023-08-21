@@ -38,7 +38,7 @@
                 <td th:text="${product.cijena} + ' €'"></td>
                 <td th:text="${product.dostupnaKolicina}"></td>
                 <td>
-                    <form th:action="@{/cart/add}" method="post">
+                    <form th:action="@{cart/add}" method="post">
                         <input type="hidden" name="productId" th:value="${product.idProizvod}"/>
                         <input type="number" class="form-control product-quantity" name="quantity" value="1" min="1"/>
                         <td>

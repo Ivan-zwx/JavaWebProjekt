@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.ui.Model;
 
 @Controller
-@RequestMapping("/cart")
+@RequestMapping("store/cart")
 @AllArgsConstructor
 @SessionAttributes("cart")
 public class CartController {
@@ -43,20 +43,20 @@ public class CartController {
                                  @RequestParam int productId,
                                  @RequestParam int newQuantity) {
         cart.updateItemQuantity(productId, newQuantity);
-        return "redirect:/cart";
+        return "redirect:/store/cart";
     }
 
     @PostMapping("/remove")
     public String removeCartItem(@ModelAttribute("cart") Cart cart,
                                  @RequestParam int productId) {
         cart.removeItem(productId);
-        return "redirect:/cart";
+        return "redirect:/store/cart";
     }
 
     @PostMapping("/clear")
     public String clearCart(@ModelAttribute("cart") Cart cart) {
         cart.removeAllItems();
-        return "redirect:/cart";
+        return "redirect:/store/cart";
     }
 }
 
