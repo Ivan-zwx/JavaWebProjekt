@@ -32,8 +32,8 @@ public class CartController {
     public String addToCart(@ModelAttribute("cart") Cart cart,
                             @RequestParam int productId,
                             @RequestParam int quantity) {
-        //Proizvod product = storeRepository.getProductById(productId);
-        //cart.addItem(new CartItem(product, quantity));
+        Proizvod product = storeRepository.getProductById(productId);
+        cart.addItem(new CartItem(product, quantity));
         return "redirect:/store/products";
     }
 

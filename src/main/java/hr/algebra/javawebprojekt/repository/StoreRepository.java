@@ -8,4 +8,5 @@ import java.util.List;
 public interface StoreRepository {
     List<Proizvod> getAllProducts();
     List<Kategorija> getAllCategories();
+    Proizvod getProductById(int productId);
 }

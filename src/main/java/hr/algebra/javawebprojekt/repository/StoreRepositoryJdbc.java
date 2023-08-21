@@ -19,6 +19,7 @@ public class StoreRepositoryJdbc implements StoreRepository {
         this.jdbcTemplate = jdbcTemplate;
     }
 
+
     @Override
     public List<Proizvod> getAllProducts() {
         String sql = "SELECT * FROM Proizvod";
@@ -37,6 +38,19 @@ public class StoreRepositoryJdbc implements StoreRepository {
         return jdbcTemplate.query(sql, (ResultSet rs, int rowNum) -> new Kategorija(
                 rs.getInt("IDKategorija"),
                 rs.getString("Naziv")
+        ));
+    }
+
+
+    @Override
+    public Proizvod getProductById(int productId) {
+        String sql = "SELECT * FROM Proizvod WHERE IDProizvod = ?";
+        return jdbcTemplate.queryForObject(sql, new Object[]{productId}, (ResultSet rs, int rowNum) -> new Proizvod(
+                rs.getInt("IDProizvod"),
+                rs.getInt("KategorijaID"),
+                rs.getString("Naziv"),
+                rs.getFloat("Cijena"),
+                rs.getInt("DostupnaKolicina")
         ));
     }
 }
