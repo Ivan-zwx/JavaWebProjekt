@@ -40,7 +40,8 @@
                 <td>
                     <form th:action="@{cart/add}" method="post">
                         <input type="hidden" name="productId" th:value="${product.idProizvod}"/>
-                        <input type="number" class="form-control product-quantity" name="quantity" value="1" min="1"/>
+                        <input type="number" class="form-control product-quantity" name="quantity"
+                               th:value="1" min="1" th:max="${product.dostupnaKolicina}"/>
                         <td>
                             <button type="submit" class="btn btn-outline-primary add-to-cart-btn">Add to Cart</button>
                         </td>

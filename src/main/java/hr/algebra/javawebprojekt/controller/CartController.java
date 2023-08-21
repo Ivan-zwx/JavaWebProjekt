@@ -32,9 +32,16 @@ public class CartController {
     public String addToCart(@ModelAttribute("cart") Cart cart,
                             @RequestParam int productId,
                             @RequestParam int quantity) {
+
         Proizvod product = storeRepository.getProductById(productId);
-        cart.addItem(new CartItem(product, quantity));
-        //System.out.println("ADDED TO CART: " + product + " (ID=" + productId + ") " + "*" + quantity);
+
+        int currentQuantityInCart = cart.getCurrentQuantityForProduct(productId);
+        int newTotalQuantity = currentQuantityInCart + quantity;
+
+        if (newTotalQuantity <= product.getDostupnaKolicina()) {
+            cart.addItem(new CartItem(product, quantity));
+            //System.out.println("ADDED TO CART: " + product + " (ID=" + productId + ") " + "*" + quantity);
+        }
         return "redirect:/store/products";
     }
 

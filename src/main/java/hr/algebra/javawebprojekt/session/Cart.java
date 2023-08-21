@@ -51,7 +51,7 @@ public class Cart {
         cartItems.removeIf(cartItem -> cartItem.getProduct().getIdProizvod() == productId);
     }
 
-    // Remove all items from the cart
+    // Remove all items from the cart.
     public void removeAllItems() {
         cartItems.clear();
     }
@@ -61,6 +61,16 @@ public class Cart {
         return (float) cartItems.stream()
                 .mapToDouble(item -> item.getProduct().getCijena() * item.getQuantity())
                 .sum();
+    }
+
+    // Return the quantity of a product currently in the cart, by product ID.
+    // If the product is not present in the cart, return 0.
+    public int getCurrentQuantityForProduct(int productId) {
+        return cartItems.stream()
+                .filter(item -> item.getProduct().getIdProizvod() == productId)
+                .findFirst()
+                .map(CartItem::getQuantity)
+                .orElse(0);
     }
 }
 
