@@ -1,16 +1,13 @@
 package hr.algebra.javawebprojekt.controller;
 
 import hr.algebra.javawebprojekt.domain.Proizvod;
-import hr.algebra.javawebprojekt.dto.Cart;
-import hr.algebra.javawebprojekt.dto.CartItem;
+import hr.algebra.javawebprojekt.session.Cart;
+import hr.algebra.javawebprojekt.session.CartItem;
 import hr.algebra.javawebprojekt.repository.StoreRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.ui.Model;
-
-import java.util.Collections;
-import java.util.Map;
 
 @Controller
 @RequestMapping("/cart")
@@ -41,6 +38,25 @@ public class CartController {
         return "redirect:/store/products";
     }
 
-    // ... other methods like remove and update
+    @PostMapping("/update")
+    public String updateCartItem(@ModelAttribute("cart") Cart cart,
+                                 @RequestParam int productId,
+                                 @RequestParam int newQuantity) {
+        cart.updateItemQuantity(productId, newQuantity);
+        return "redirect:/cart";
+    }
+
+    @PostMapping("/remove")
+    public String removeCartItem(@ModelAttribute("cart") Cart cart,
+                                 @RequestParam int productId) {
+        cart.removeItem(productId);
+        return "redirect:/cart";
+    }
+
+    @PostMapping("/clear")
+    public String clearCart(@ModelAttribute("cart") Cart cart) {
+        cart.removeAllItems();
+        return "redirect:/cart";
+    }
 }
 

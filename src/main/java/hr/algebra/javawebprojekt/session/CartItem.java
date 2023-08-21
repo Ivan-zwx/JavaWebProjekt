@@ -1,4 +1,4 @@
-package hr.algebra.javawebprojekt.dto;
+package hr.algebra.javawebprojekt.session;
 
 import hr.algebra.javawebprojekt.domain.Proizvod;
 import lombok.AllArgsConstructor;

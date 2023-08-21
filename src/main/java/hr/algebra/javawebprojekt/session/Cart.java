@@ -1,6 +1,5 @@
-package hr.algebra.javawebprojekt.dto;
+package hr.algebra.javawebprojekt.session;
 
-import hr.algebra.javawebprojekt.domain.Proizvod;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import lombok.Getter;
@@ -31,16 +30,11 @@ public class Cart {
         }
     }
 
-    // Remove the cart item with the given product ID.
-    public void removeItem(CartItem item) {
-        cartItems.removeIf(cartItem -> cartItem.getProduct().getIdProizvod().equals(item.getProduct().getIdProizvod()));
-    }
-
-    // Find the cart item by product and then update its quantity if it exists.
+    // Find the cart item by product ID and then update its quantity if it exists.
     // If the update quantity is <= 0, remove the item from the cart.
-    public void updateItemQuantity(Proizvod product, int quantity) {
+    public void updateItemQuantity(int productId, int quantity) {
         Optional<CartItem> existingItem = cartItems.stream()
-                .filter(cartItem -> cartItem.getProduct().getIdProizvod().equals(product.getIdProizvod()))
+                .filter(cartItem -> cartItem.getProduct().getIdProizvod() == productId)
                 .findFirst();
 
         if (existingItem.isPresent()) {
@@ -50,6 +44,11 @@ public class Cart {
                 existingItem.get().setQuantity(quantity);
             }
         }
+    }
+
+    // Remove the cart item with the given product ID.
+    public void removeItem(int productId) {
+        cartItems.removeIf(cartItem -> cartItem.getProduct().getIdProizvod() == productId);
     }
 
     // Remove all items from the cart
