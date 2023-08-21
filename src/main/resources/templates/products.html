@@ -15,7 +15,8 @@
 
         <select id="categoryDropdown" class="form-control mb-4" style="width: 250px;">
             <option value="all">All Categories</option>
-            <option th:each="category : ${categories}" th:value="${category.idKategorija}"
+            <option th:each="category : ${categories}" th:value="${category.naziv}"
+                    th:selected="${selectedCategoryName != null && category.naziv == selectedCategoryName}"
                     th:text="${category.naziv}"></option>
         </select>
 
@@ -41,10 +42,10 @@
 
     <!-- DataTables initialization script and filtering logic -->
     <script>
-        $(document).ready(function() {
+        $(document).ready(function () {
             var table = $('#productsTable').DataTable();
 
-            $('#categoryDropdown').on('change', function() {
+            $('#categoryDropdown').on('change', function () {
                 var selectedCategoryName = $(this).find("option:selected").text();
 
                 if (selectedCategoryName === "All Categories") {
@@ -52,7 +53,7 @@
                 } else {
                     table.column(0).search(selectedCategoryName).draw();
                 }
-            });
+            }).trigger('change');
         });
     </script>
 </section>

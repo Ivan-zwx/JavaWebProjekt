@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+
+<head>
+    <meta charset="UTF-8">
+</head>
+
+<body>
+<section layout:fragment="content">
+    <div class="container mt-4">
+        <h2 class="mb-4">Categories</h2>
+
+        <ul class="list-group">
+            <li th:each="category : ${categories}" class="list-group-item">
+                <a th:href="@{/store/products(categoryID=${category.idKategorija})}"
+                   class="btn btn-outline-secondary" th:text="${category.naziv}"></a>
+            </li>
+        </ul>
+    </div>
+</section>
+</body>
+
+</html>
