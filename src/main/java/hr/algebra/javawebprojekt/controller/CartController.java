@@ -9,6 +9,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.ui.Model;
 
+import java.util.Collections;
+import java.util.Map;
+
 @Controller
 @RequestMapping("/cart")
 @AllArgsConstructor
@@ -34,6 +37,7 @@ public class CartController {
                             @RequestParam int quantity) {
         Proizvod product = storeRepository.getProductById(productId);
         cart.addItem(new CartItem(product, quantity));
+        //System.out.println("ADDED TO CART: " + product + " (ID=" + productId + ") " + "*" + quantity);
         return "redirect:/store/products";
     }
 

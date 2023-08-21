@@ -27,14 +27,25 @@
                 <th>Name</th>
                 <th>Price</th>
                 <th>Available Quantity</th>
+                <th>Quantity</th>
+                <th>Action</th>
             </tr>
             </thead>
             <tbody>
-            <tr th:each="product : ${products}">
+            <tr th:each="product : ${products}" th:data-product-id="${product.idProizvod}">
                 <td th:text="${categoryMap.get(product.kategorijaID)}"></td>
                 <td th:text="${product.naziv}"></td>
                 <td th:text="${product.cijena} + ' €'"></td>
                 <td th:text="${product.dostupnaKolicina}"></td>
+                <td>
+                    <form th:action="@{/cart/add}" method="post">
+                        <input type="hidden" name="productId" th:value="${product.idProizvod}"/>
+                        <input type="number" class="form-control product-quantity" name="quantity" value="1" min="1"/>
+                        <td>
+                            <button type="submit" class="btn btn-outline-primary add-to-cart-btn">Add to Cart</button>
+                        </td>
+                    </form>
+                </td>
             </tr>
             </tbody>
         </table>
