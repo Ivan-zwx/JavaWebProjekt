@@ -4,7 +4,7 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 <head>
     <meta charset="UTF-8">
-    <title th:text="${title}">Default Title</title>
+    <title>Electronics Store</title>
 
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
@@ -24,8 +24,9 @@
 <body>
 
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <!-- Add your navigation items here -->
-    <a class="navbar-brand" href="">My Web App</a>
+    <a class="navbar-brand" th:href="@{/store}">Home</a>
+    <a class="navbar-brand" th:href="@{/store/products}">Products</a>
+    <a class="navbar-brand" href="">Categories</a>
 </nav>
 
 <section layout:fragment="content">

@@ -3,39 +3,59 @@
       xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layout}">
+
 <head>
     <meta charset="UTF-8">
-    <title>Products</title>
 </head>
+
 <body>
 <section layout:fragment="content">
-    <h2>Products</h2>
+    <div class="container mt-4">
+        <h2 class="mb-4">Products</h2>
 
-    <!-- Dropdown for categories -->
-    <select>
-        <option value="all">All Categories</option>
-        <option th:each="category : ${categories}" th:value="${category.idKategorija}"
-                th:text="${category.naziv}"></option>
-    </select>
+        <select id="categoryDropdown" class="form-control mb-4" style="width: 250px;">
+            <option value="all">All Categories</option>
+            <option th:each="category : ${categories}" th:value="${category.idKategorija}"
+                    th:text="${category.naziv}"></option>
+        </select>
 
-    <table class="table">
-        <thead>
-        <tr>
-            <th>Category</th>
-            <th>Name</th>
-            <th>Price</th>
-            <th>Available Quantity</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr th:each="product : ${products}">
-            <td th:text="${categoryMap.get(product.kategorijaID)}"></td>
-            <td th:text="${product.naziv}"></td>
-            <td th:text="${product.cijena}"></td>
-            <td th:text="${product.dostupnaKolicina}"></td>
-        </tr>
-        </tbody>
-    </table>
+        <table class="table table-bordered table-hover" id="productsTable">
+            <thead>
+            <tr>
+                <th>Category</th>
+                <th>Name</th>
+                <th>Price</th>
+                <th>Available Quantity</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="product : ${products}">
+                <td th:text="${categoryMap.get(product.kategorijaID)}"></td>
+                <td th:text="${product.naziv}"></td>
+                <td th:text="${product.cijena} + ' €'"></td>
+                <td th:text="${product.dostupnaKolicina}"></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- DataTables initialization script and filtering logic -->
+    <script>
+        $(document).ready(function() {
+            var table = $('#productsTable').DataTable();
+
+            $('#categoryDropdown').on('change', function() {
+                var selectedCategoryName = $(this).find("option:selected").text();
+
+                if (selectedCategoryName === "All Categories") {
+                    table.column(0).search('').draw();
+                } else {
+                    table.column(0).search(selectedCategoryName).draw();
+                }
+            });
+        });
+    </script>
 </section>
 </body>
+
 </html>
