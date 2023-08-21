@@ -1,34 +1,41 @@
 <!DOCTYPE html>
 <html lang="en"
-      xmlns:th="http://www.thymeleaf.org">
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
 <head>
     <meta charset="UTF-8">
     <title>Products</title>
 </head>
 <body>
+<section layout:fragment="content">
+    <h2>Products</h2>
 
-<h2>Products</h2>
+    <!-- Dropdown for categories -->
+    <select>
+        <option value="all">All Categories</option>
+        <option th:each="category : ${categories}" th:value="${category.idKategorija}"
+                th:text="${category.naziv}"></option>
+    </select>
 
-<table>
-    <thead>
-    <tr>
-        <th>ID</th>
-        <th>Category ID</th>
-        <th>Name</th>
-        <th>Price</th>
-        <th>Available Quantity</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr th:each="product : ${products}">
-        <td th:text="${product.idProizvod}"></td>
-        <td th:text="${product.kategorijaID}"></td>
-        <td th:text="${product.naziv}"></td>
-        <td th:text="${product.cijena}"></td>
-        <td th:text="${product.dostupnaKolicina}"></td>
-    </tr>
-    </tbody>
-</table>
-
+    <table class="table">
+        <thead>
+        <tr>
+            <th>Category</th>
+            <th>Name</th>
+            <th>Price</th>
+            <th>Available Quantity</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="product : ${products}">
+            <td th:text="${categoryMap.get(product.kategorijaID)}"></td>
+            <td th:text="${product.naziv}"></td>
+            <td th:text="${product.cijena}"></td>
+            <td th:text="${product.dostupnaKolicina}"></td>
+        </tr>
+        </tbody>
+    </table>
+</section>
 </body>
 </html>
