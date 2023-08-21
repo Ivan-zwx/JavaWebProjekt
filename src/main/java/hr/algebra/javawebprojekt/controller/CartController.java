@@ -22,7 +22,7 @@ public class CartController {
         return new Cart();
     }
 
-    @GetMapping
+    @GetMapping("")
     public String showCart(@ModelAttribute("cart") Cart cart, Model model) {
         model.addAttribute("cartItems", cart.getCartItems());
         return "cart";
