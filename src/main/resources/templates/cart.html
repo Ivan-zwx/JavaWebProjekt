@@ -46,15 +46,26 @@
             </tbody>
         </table>
 
-        <!-- Cart Total and Clear Cart Button -->
+        <!-- Cart Total -->
         <div class="row mt-4">
-            <div class="col-md-6">
+            <div class="col-md-12 text-center">
                 <h4>Total: <span th:text="${cart.getTotal()} + ' €'"></span></h4>
             </div>
-            <div class="col-md-6 text-right">
+        </div>
+
+        <!-- Clear Cart Button -->
+        <div class="row mt-4">
+            <div class="col-md-12 text-center">
                 <form th:action="@{/cart/clear}" method="post">
                     <button type="submit" class="btn btn-outline-danger">Clear Cart</button>
                 </form>
+            </div>
+        </div>
+
+        <!-- Checkout Button -->
+        <div class="row mt-4">
+            <div class="col-md-12 text-center">
+                <a href="" class="btn btn-outline-success">Checkout</a>
             </div>
         </div>
     </div>
