@@ -1,10 +1,13 @@
 package hr.algebra.javawebprojekt.session;
 
+import hr.algebra.javawebprojekt.domain.Racun;
+import hr.algebra.javawebprojekt.domain.Stavka;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -72,5 +75,20 @@ public class Cart {
                 .map(CartItem::getQuantity)
                 .orElse(0);
     }
+
+    /********************************************************************************************************************************/
+
+    public Racun generateRacun(String username, String nacinKupovine) {
+        return new Racun(null, username, LocalDateTime.now().toString(), nacinKupovine, getTotal());
+    }
+
+    public List<Stavka> generateStavke(int racunId) {
+        List<Stavka> stavke = new ArrayList<>();
+        for (CartItem item : cartItems) {
+            stavke.add(new Stavka(null, racunId, item.getProduct().getIdProizvod(), item.getQuantity()));
+        }
+        return stavke;
+    }
+
 }
 

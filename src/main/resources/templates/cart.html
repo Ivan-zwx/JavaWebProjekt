@@ -64,12 +64,20 @@
             </div>
         </div>
 
-        <!-- Checkout Button -->
+        <!-- Payment Method Selector and Checkout Button -->
         <div class="row mt-4">
             <div class="col-md-12 text-center">
-                <a href="" class="btn btn-outline-success">Checkout</a>
+                <form th:action="@{/store/checkout/process}" method="post">
+                    <label for="paymentMethod">Choose a payment method:</label>
+                    <select id="paymentMethod" name="paymentMethod">
+                        <option value="Cash">Cash</option>
+                        <option value="Paypal">Paypal</option>
+                    </select>
+                    <button type="submit" class="btn btn-outline-success">Checkout</button>
+                </form>
             </div>
         </div>
+
     </div>
 </section>
 </body>
