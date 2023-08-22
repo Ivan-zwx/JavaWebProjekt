@@ -22,11 +22,15 @@ public class Proizvod {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Proizvod proizvod = (Proizvod) o;
-        return naziv.equals(proizvod.naziv) && cijena.equals(proizvod.cijena) && dostupnaKolicina.equals(proizvod.dostupnaKolicina);
+        return idProizvod.equals(proizvod.idProizvod) &&
+                kategorijaID.equals(proizvod.kategorijaID) &&
+                naziv.equals(proizvod.naziv) &&
+                cijena.equals(proizvod.cijena) &&
+                dostupnaKolicina.equals(proizvod.dostupnaKolicina);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(naziv, cijena, dostupnaKolicina);
+        return Objects.hash(idProizvod, kategorijaID, naziv, cijena, dostupnaKolicina);
     }
 }

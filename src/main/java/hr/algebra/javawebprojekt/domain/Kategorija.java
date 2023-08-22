@@ -19,11 +19,12 @@ public class Kategorija {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Kategorija kategorija = (Kategorija) o;
-        return naziv.equals(kategorija.naziv);
+        return idKategorija.equals(kategorija.idKategorija) &&
+                naziv.equals(kategorija.naziv);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(naziv);
+        return Objects.hash(idKategorija, naziv);
     }
 }
