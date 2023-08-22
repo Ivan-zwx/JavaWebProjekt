@@ -23,7 +23,6 @@ public class CheckoutController {
     }
 
     @PostMapping("/process")
-    @PreAuthorize("hasAuthority('ROLE_USER')")
     public String checkout(@ModelAttribute("cart") Cart cart,
                            @RequestParam String paymentMethod,
                            Authentication authentication) {
