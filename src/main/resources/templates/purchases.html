@@ -22,25 +22,42 @@
 
         <ul class="list-group mb-5">
             <li th:each="racunDetail : ${purchaseHistory.racunDetailsList}" class="list-group-item">
-                <h5 style="color: midnightblue; text-decoration: underline">Invoice ID: <span th:text="${racunDetail.racun.idRacun}"></span></h5>
-                <p>Time of Purchase: <span th:text="${racunDetail.racun.vrijemeKupovine}"></span></p>
+                <h5 style="color: midnightblue; text-decoration: underline">Invoice ID: <span
+                        th:text="${racunDetail.racun.idRacun}"></span></h5>
+                <p>Time of Purchase: <span class="timestamp"
+                                           th:attr="data-raw-timestamp=${racunDetail.racun.vrijemeKupovine}"
+                                           th:text="${racunDetail.racun.vrijemeKupovine}"></span></p>
                 <p>Payment Method: <span th:text="${racunDetail.racun.nacinKupovine}"></span></p>
                 <p>Grand Total: <span th:text="${racunDetail.racun.ukupnaCijena} + ' €'"></span></p>
 
                 <h6>Items:</h6>
                 <ul class="list-group mt-2">
                     <li th:each="stavkaDetail : ${racunDetail.stavkeDetails}" class="list-group-item">
-                        <p style="color: blue; text-decoration: underline">Item ID: <span th:text="${stavkaDetail.idStavka}"></span></p>
+                        <p style="color: blue; text-decoration: underline">Item ID: <span
+                                th:text="${stavkaDetail.idStavka}"></span></p>
                         <p>Product Name: <span th:text="${stavkaDetail.naziv}"></span></p>
                         <p>Individual Product Price: <span th:text="${stavkaDetail.cijena} + ' €'"></span></p>
                         <p>Purchased Quantity: <span th:text="${stavkaDetail.kolicina}"></span></p>
-                        <p>Total Price: <span th:text="${stavkaDetail.cijena * stavkaDetail.kolicina} + ' €'"></span></p>
+                        <p>Total Price: <span th:text="${stavkaDetail.cijena * stavkaDetail.kolicina} + ' €'"></span>
+                        </p>
                     </li>
                 </ul>
             </li>
         </ul>
 
     </div>
+
+    <script>
+        $(document).ready(function () {
+            $(".timestamp").each(function () {
+                let rawTimestamp = $(this).attr('data-raw-timestamp');
+                rawTimestamp = rawTimestamp.slice(0, 23) + 'Z';
+                let date = new Date(rawTimestamp);
+                let formattedDate = `${date.getDate().toString().padStart(2, '0')}/${(date.getMonth() + 1).toString().padStart(2, '0')}/${date.getFullYear()} at ${date.getHours().toString().padStart(2, '0')}:${date.getMinutes().toString().padStart(2, '0')}:${date.getSeconds().toString().padStart(2, '0')}`;
+                $(this).text(formattedDate);
+            });
+        });
+    </script>
 </section>
 </body>
 
