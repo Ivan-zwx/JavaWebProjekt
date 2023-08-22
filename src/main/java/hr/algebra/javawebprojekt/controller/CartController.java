@@ -23,8 +23,11 @@ public class CartController {
     }
 
     @GetMapping("")
-    public String showCart(@ModelAttribute("cart") Cart cart, Model model) {
+    public String showCart(@ModelAttribute("cart") Cart cart,
+                           @RequestParam(required = false) String purchase,
+                           Model model) {
         model.addAttribute("cartItems", cart.getCartItems());
+        model.addAttribute("purchaseStatus", purchase);
         return "cart";
     }
 

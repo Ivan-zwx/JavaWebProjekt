@@ -11,6 +11,18 @@
 <body>
 <section layout:fragment="content">
     <div class="container mt-4">
+
+        <!-- Display feedback based on purchaseStatus -->
+        <div th:if="${purchaseStatus == 'success'}" class="alert alert-success">
+            Purchase successful!
+        </div>
+        <div th:if="${purchaseStatus == 'empty_cart'}" class="alert alert-warning">
+            Your cart is empty. Please add products to the cart before proceeding.
+        </div>
+        <div th:if="${purchaseStatus == 'error'}" class="alert alert-danger">
+            An error occurred during the purchase. Please try again.
+        </div>
+
         <h2 class="mb-4">Your Cart</h2>
 
         <!-- Cart Table -->
