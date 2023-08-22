@@ -33,7 +33,7 @@
                 <h6>Items:</h6>
                 <ul class="list-group mt-2">
                     <li th:each="stavkaDetail : ${racunDetail.stavkeDetails}" class="list-group-item">
-                        <p style="color: blue; text-decoration: underline">Item ID: <span
+                        <p style="color: darkblue; text-decoration: underline">Item ID: <span
                                 th:text="${stavkaDetail.idStavka}"></span></p>
                         <p>Product Name: <span th:text="${stavkaDetail.naziv}"></span></p>
                         <p>Individual Product Price: <span th:text="${stavkaDetail.cijena} + ' €'"></span></p>
