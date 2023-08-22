@@ -66,17 +66,22 @@
 
         <!-- Payment Method Selector and Checkout Button -->
         <div class="row mt-4">
-            <div class="col-md-12 text-center">
+            <div class="col-md-4 mx-auto">
                 <form th:action="@{/store/checkout/process}" method="post">
-                    <label for="paymentMethod">Choose a payment method:</label>
-                    <select id="paymentMethod" name="paymentMethod">
-                        <option value="Cash">Cash</option>
-                        <option value="Paypal">Paypal</option>
-                    </select>
-                    <button type="submit" class="btn btn-outline-success">Checkout</button>
+                    <div class="form-group mb-3">
+                        <label for="paymentMethod" class="mb-2">Choose a payment method:</label>
+                        <select id="paymentMethod" name="paymentMethod" class="form-control" style="width: 100%;">
+                            <option value="Cash">Cash</option>
+                            <option value="Paypal">Paypal</option>
+                        </select>
+                    </div>
+                    <div class="text-center">
+                        <button type="submit" class="btn btn-outline-success">Checkout</button>
+                    </div>
                 </form>
             </div>
         </div>
+
 
     </div>
 </section>
