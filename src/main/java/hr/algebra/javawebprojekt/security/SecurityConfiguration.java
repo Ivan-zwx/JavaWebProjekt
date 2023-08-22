@@ -31,6 +31,7 @@ public class SecurityConfiguration {
 
         http.authorizeHttpRequests((requests) -> requests
                         .requestMatchers("/store/checkout/**").hasAuthority("ROLE_USER")
+                        .requestMatchers("/store/purchases/**").hasAuthority("ROLE_USER")
                         .requestMatchers(resources).permitAll()
                         .anyRequest().authenticated())
                 .formLogin(form -> form

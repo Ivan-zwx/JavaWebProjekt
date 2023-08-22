@@ -14,7 +14,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Primary
 @Repository
@@ -26,6 +28,7 @@ public class StoreRepositoryJdbc implements StoreRepository {
         this.jdbcTemplate = jdbcTemplate;
     }
 
+    /********************************************************************************************************************************/
 
     @Override
     public List<Proizvod> getAllProducts() {
@@ -87,5 +90,46 @@ public class StoreRepositoryJdbc implements StoreRepository {
             jdbcTemplate.update(insertStavkaSql, stavka.getRacunID(), stavka.getProizvodID(), stavka.getKolicina());
         }
     }
+
+    /********************************************************************************************************************************/
+
+    @Override
+    public List<Racun> getRacuniForUser(String username) {
+        String sql = "SELECT * FROM Racun WHERE username = ?";
+        return jdbcTemplate.query(sql, new Object[]{username}, (ResultSet rs, int rowNum) -> new Racun(
+                rs.getInt("IDRacun"),
+                rs.getString("username"),
+                rs.getString("vrijemeKupovine"),
+                rs.getString("nacinKupovine"),
+                rs.getFloat("ukupnaCijena")
+        ));
+    }
+
+    @Override
+    public List<Stavka> getStavkeForRacun(int racunId) {
+        String sql = "SELECT * FROM Stavka WHERE racunID = ?";
+        return jdbcTemplate.query(sql, new Object[]{racunId}, (ResultSet rs, int rowNum) -> new Stavka(
+                rs.getInt("IDStavka"),
+                rs.getInt("racunID"),
+                rs.getInt("proizvodID"),
+                rs.getInt("kolicina")
+        ));
+    }
+
+    @Override
+    public Map<Racun, List<Stavka>> getRacuniWithStavkeForUser(String username) {
+        List<Racun> racuni = getRacuniForUser(username);
+        Map<Racun, List<Stavka>> resultMap = new HashMap<>();
+
+        for (Racun racun : racuni) {
+            List<Stavka> stavke = getStavkeForRacun(racun.getIdRacun());
+            resultMap.put(racun, stavke);
+        }
+
+        return resultMap;
+    }
+
+    /********************************************************************************************************************************/
+
 
 }
