@@ -30,7 +30,7 @@ public class SecurityConfiguration {
         };
 
         http.authorizeHttpRequests((requests) -> requests
-                        .requestMatchers("/user/**").hasAuthority("USER")
+                        .requestMatchers("/user/**").hasAuthority("ROLE_USER")
                         .requestMatchers(resources).permitAll()
                         .anyRequest().authenticated())
                 .formLogin(form -> form

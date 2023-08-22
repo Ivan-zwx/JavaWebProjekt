@@ -3,6 +3,7 @@ package hr.algebra.javawebprojekt.controller;
 import hr.algebra.javawebprojekt.session.Cart;
 import hr.algebra.javawebprojekt.repository.StoreRepository;
 import lombok.AllArgsConstructor;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -22,13 +23,10 @@ public class CheckoutController {
     }
 
     @PostMapping("/process")
+    @PreAuthorize("hasAuthority('ROLE_USER')")
     public String checkout(@ModelAttribute("cart") Cart cart,
                            @RequestParam String paymentMethod,
                            Authentication authentication) {
-        if (authentication == null || !authentication.isAuthenticated()) {
-            return "redirect:/login";
-        }
-
         String username = authentication.getName();
 
         if ("Cash".equals(paymentMethod)) {
