@@ -11,13 +11,13 @@
 <body>
 <section layout:fragment="content">
     <div class="container mt-4">
-        <h2 class="mb-4">Login</h2>
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <h2 class="mb-4 text-center">Login</h2>
 
-        <!-- Login Form -->
-        <div class="row">
-            <div class="col-md-6 offset-md-3">
+                <!-- Login Form -->
                 <form th:action="@{/login/process}" method="post">
-                    <div class="form-group">
+                    <div class="form-group mb-3">
                         <label for="username">Username</label>
                         <div class="input-group">
                             <div class="input-group-prepend">
@@ -29,7 +29,7 @@
                         </div>
                     </div>
 
-                    <div class="form-group">
+                    <div class="form-group mb-3">
                         <label for="password">Password</label>
                         <div class="input-group">
                             <div class="input-group-prepend">
@@ -44,12 +44,11 @@
                     <!-- Hidden CSRF Token input -->
                     <input type="hidden" name="_csrf" th:value="${_csrf.token}"/>
 
-                    <button type="submit" class="btn btn-primary btn-block">Login</button>
+                    <button type="submit" class="btn btn-outline-primary btn-block mb-3">Login</button>
                 </form>
             </div>
         </div>
     </div>
 </section>
 </body>
-
 </html>
