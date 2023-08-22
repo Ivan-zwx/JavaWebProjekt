@@ -78,6 +78,10 @@ public class Cart {
 
     /********************************************************************************************************************************/
 
+    public boolean isEmpty() {
+        return cartItems.isEmpty();
+    }
+
     public Racun generateRacun(String username, String nacinKupovine) {
         return new Racun(null, username, LocalDateTime.now().toString(), nacinKupovine, getTotal());
     }

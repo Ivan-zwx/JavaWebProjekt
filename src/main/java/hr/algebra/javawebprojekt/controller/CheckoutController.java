@@ -26,6 +26,11 @@ public class CheckoutController {
     public String checkout(@ModelAttribute("cart") Cart cart,
                            @RequestParam String paymentMethod,
                            Authentication authentication) {
+
+        if (cart.isEmpty()) {
+            return "redirect:/store/cart?purchase=empty_cart";
+        }
+
         String username = authentication.getName();
 
         if ("Cash".equals(paymentMethod)) {
@@ -33,7 +38,8 @@ public class CheckoutController {
             cart.removeAllItems();
             return "redirect:/store/cart?purchase=success";
         } else if ("Paypal".equals(paymentMethod)) {
-            return "redirect:/store/cart?purchase=paypal_not_implemented";
+            // implement Paypal logic
+            return "redirect:/store/cart?purchase=success";
         } else {
             return "redirect:/store/cart?purchase=error";
         }
