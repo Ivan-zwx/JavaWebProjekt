@@ -22,7 +22,7 @@
 
         <ul class="list-group mb-5">
             <li th:each="racunDetail : ${purchaseHistory.racunDetailsList}" class="list-group-item">
-                <h5 style="color: midnightblue">Invoice ID: <span th:text="${racunDetail.racun.idRacun}"></span></h5>
+                <h5 style="color: midnightblue; text-decoration: underline">Invoice ID: <span th:text="${racunDetail.racun.idRacun}"></span></h5>
                 <p>Time of Purchase: <span th:text="${racunDetail.racun.vrijemeKupovine}"></span></p>
                 <p>Payment Method: <span th:text="${racunDetail.racun.nacinKupovine}"></span></p>
                 <p>Grand Total: <span th:text="${racunDetail.racun.ukupnaCijena} + ' €'"></span></p>
@@ -30,7 +30,7 @@
                 <h6>Items:</h6>
                 <ul class="list-group mt-2">
                     <li th:each="stavkaDetail : ${racunDetail.stavkeDetails}" class="list-group-item">
-                        <p style="color: blue">Item ID: <span th:text="${stavkaDetail.idStavka}"></span></p>
+                        <p style="color: blue; text-decoration: underline">Item ID: <span th:text="${stavkaDetail.idStavka}"></span></p>
                         <p>Product Name: <span th:text="${stavkaDetail.naziv}"></span></p>
                         <p>Individual Product Price: <span th:text="${stavkaDetail.cijena} + ' €'"></span></p>
                         <p>Purchased Quantity: <span th:text="${stavkaDetail.kolicina}"></span></p>
