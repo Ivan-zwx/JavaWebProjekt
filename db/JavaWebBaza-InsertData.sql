@@ -1,13 +1,19 @@
 -- noinspection SqlNoDataSourceInspectionForFile
 
+----------------------------------------------------------------------------------------------------------------------------------------------------------
+
 use JavaWebBaza
 go
+
+----------------------------------------------------------------------------------------------------------------------------------------------------------
 
 -- Categories
 insert into [Kategorija]([Naziv]) values
 ('CPU'),
 ('Motherboard'),
 ('GPU');
+
+----------------------------------------------------------------------------------------------------------------------------------------------------------
 
 -- Products
 -- CPUs
@@ -24,3 +30,17 @@ insert into [Proizvod]([KategorijaID], [Naziv], [Cijena], [DostupnaKolicina]) va
 insert into [Proizvod]([KategorijaID], [Naziv], [Cijena], [DostupnaKolicina]) values
 (3, 'NVIDIA GeForce RTX 3080', 699.99, 50),
 (3, 'AMD Radeon RX 6900 XT', 999.99, 40);
+
+----------------------------------------------------------------------------------------------------------------------------------------------------------
+
+-- Users
+insert into [users](username, password, enabled) values
+('user', '$2a$10$2L.FudeEOgf80dFJ7Q9NXu01moIMpDaa7a5RCCwjFvH8RQXwA6sz2', 1),
+('admin', '$2a$10$2L.FudeEOgf80dFJ7Q9NXu01moIMpDaa7a5RCCwjFvH8RQXwA6sz2', 1);
+
+-- Authorities
+insert into [authorities](username, authority) values
+('user', 'ROLE_USER'),
+('admin', 'ROLE_ADMIN');
+
+----------------------------------------------------------------------------------------------------------------------------------------------------------
