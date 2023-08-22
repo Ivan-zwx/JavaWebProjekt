@@ -4,6 +4,7 @@ import hr.algebra.javawebprojekt.domain.Kategorija;
 import hr.algebra.javawebprojekt.domain.Proizvod;
 import hr.algebra.javawebprojekt.domain.Racun;
 import hr.algebra.javawebprojekt.domain.Stavka;
+import hr.algebra.javawebprojekt.dto.PurchaseHistoryDto;
 import hr.algebra.javawebprojekt.session.Cart;
 
 import java.util.List;
@@ -14,7 +15,5 @@ public interface StoreRepository {
     List<Kategorija> getAllCategories();
     Proizvod getProductById(int productId);
     void savePurchase(Cart cart, String username, String nacinKupovine);
-    List<Racun> getRacuniForUser(String username);
-    public List<Stavka> getStavkeForRacun(int racunId);
-    Map<Racun, List<Stavka>> getRacuniWithStavkeForUser(String username);
+    PurchaseHistoryDto getPurchaseHistoryForUser(String username);
 }

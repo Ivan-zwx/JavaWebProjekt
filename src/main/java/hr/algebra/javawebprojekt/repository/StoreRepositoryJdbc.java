@@ -4,6 +4,7 @@ import hr.algebra.javawebprojekt.domain.Kategorija;
 import hr.algebra.javawebprojekt.domain.Proizvod;
 import hr.algebra.javawebprojekt.domain.Racun;
 import hr.algebra.javawebprojekt.domain.Stavka;
+import hr.algebra.javawebprojekt.dto.PurchaseHistoryDto;
 import hr.algebra.javawebprojekt.session.Cart;
 import org.springframework.context.annotation.Primary;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -14,6 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -93,8 +95,7 @@ public class StoreRepositoryJdbc implements StoreRepository {
 
     /********************************************************************************************************************************/
 
-    @Override
-    public List<Racun> getRacuniForUser(String username) {
+    private List<Racun> getRacuniForUser(String username) {
         String sql = "SELECT * FROM Racun WHERE username = ?";
         return jdbcTemplate.query(sql, new Object[]{username}, (ResultSet rs, int rowNum) -> new Racun(
                 rs.getInt("IDRacun"),
@@ -105,8 +106,7 @@ public class StoreRepositoryJdbc implements StoreRepository {
         ));
     }
 
-    @Override
-    public List<Stavka> getStavkeForRacun(int racunId) {
+    private List<Stavka> getStavkeForRacun(int racunId) {
         String sql = "SELECT * FROM Stavka WHERE racunID = ?";
         return jdbcTemplate.query(sql, new Object[]{racunId}, (ResultSet rs, int rowNum) -> new Stavka(
                 rs.getInt("IDStavka"),
@@ -117,16 +117,35 @@ public class StoreRepositoryJdbc implements StoreRepository {
     }
 
     @Override
-    public Map<Racun, List<Stavka>> getRacuniWithStavkeForUser(String username) {
+    public PurchaseHistoryDto getPurchaseHistoryForUser(String username) {
+        List<PurchaseHistoryDto.RacunDetails> racunDetailsList = new ArrayList<>();
+
         List<Racun> racuni = getRacuniForUser(username);
-        Map<Racun, List<Stavka>> resultMap = new HashMap<>();
 
         for (Racun racun : racuni) {
             List<Stavka> stavke = getStavkeForRacun(racun.getIdRacun());
-            resultMap.put(racun, stavke);
+
+            List<PurchaseHistoryDto.StavkaDetails> stavkeDetailsList = new ArrayList<>();
+            for (Stavka stavka : stavke) {
+                Proizvod proizvod = getProductById(stavka.getProizvodID());
+
+                PurchaseHistoryDto.StavkaDetails stavkaDetails = new PurchaseHistoryDto.StavkaDetails(
+                        stavka.getIdStavka(),
+                        stavka.getRacunID(),
+                        stavka.getProizvodID(),
+                        stavka.getKolicina(),
+                        proizvod.getNaziv(),
+                        proizvod.getCijena()
+                );
+
+                stavkeDetailsList.add(stavkaDetails);
+            }
+
+            PurchaseHistoryDto.RacunDetails racunDetails = new PurchaseHistoryDto.RacunDetails(racun, stavkeDetailsList);
+            racunDetailsList.add(racunDetails);
         }
 
-        return resultMap;
+        return new PurchaseHistoryDto(racunDetailsList);
     }
 
     /********************************************************************************************************************************/
