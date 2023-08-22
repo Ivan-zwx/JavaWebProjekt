@@ -35,7 +35,7 @@ public class SecurityConfiguration {
                         .anyRequest().authenticated())
                 .formLogin(form -> form
                         .loginPage("/auth/login")
-                        .loginProcessingUrl("/auth/login/process")
+                        .loginProcessingUrl("/login/process")
                         .defaultSuccessUrl("/store", true)
                         .permitAll())
                 .logout((logout) -> logout

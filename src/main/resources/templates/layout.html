@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html lang="en"
       xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
 <head>
     <meta charset="UTF-8">
     <title>Electronics Store</title>
@@ -39,6 +40,13 @@
     <a class="navbar-brand" th:href="@{/store/cart}">
         <i class="fas fa-shopping-cart"></i> Cart
     </a>
+
+    <div sec:authorize="isAuthenticated()" class="ml-auto">
+        <a class="btn btn-outline-danger" th:href="@{/logout}">Logout</a>
+    </div>
+    <div sec:authorize="!isAuthenticated()" class="ml-auto">
+        <a class="btn btn-outline-primary" th:href="@{/auth/login}">Login</a>
+    </div>
 </nav>
 
 <section layout:fragment="content">
