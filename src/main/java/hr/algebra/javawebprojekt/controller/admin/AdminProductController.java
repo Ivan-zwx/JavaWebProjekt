@@ -46,6 +46,7 @@ public class AdminProductController {
     @GetMapping("/add")
     public String showAddProductForm(Model model) {
         model.addAttribute("product", new Proizvod());
+        model.addAttribute("categories", storeRepository.getAllCategories());
         return "admin/add-product";
     }
 
@@ -61,6 +62,7 @@ public class AdminProductController {
         Optional<Proizvod> productOptional = Optional.ofNullable(storeRepository.getProductById(id));
         Proizvod product = productOptional.orElseThrow(() -> new IllegalArgumentException("Invalid product Id: " + id));
         model.addAttribute("product", product);
+        model.addAttribute("categories", storeRepository.getAllCategories());
         return "admin/update-product";
     }
 

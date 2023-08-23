@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+
+<head>
+    <meta charset="UTF-8">
+</head>
+
+<body>
+<section layout:fragment="content">
+    <div class="container mt-4">
+        <h2>Admin - Update Product</h2>
+        <form th:action="@{/admin/products/edit}" method="post" th:object="${product}">
+            <input type="hidden" th:field="*{idProizvod}">
+            <div class="form-group">
+                <label for="kategorijaID">Category</label>
+                <select class="form-control" id="kategorijaID" th:field="*{kategorijaID}">
+                    <option th:each="category : ${categories}" th:value="${category.idKategorija}" th:text="${category.naziv}"></option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="naziv">Product Name</label>
+                <input type="text" class="form-control" id="naziv" th:field="*{naziv}">
+            </div>
+            <div class="form-group">
+                <label for="cijena">Price</label>
+                <input type="text" class="form-control" id="cijena" th:field="*{cijena}">
+            </div>
+            <div class="form-group">
+                <label for="dostupnaKolicina">Available Quantity</label>
+                <input type="number" class="form-control" id="dostupnaKolicina" th:field="*{dostupnaKolicina}">
+            </div>
+            <button type="submit" class="btn btn-primary">Update Product</button>
+        </form>
+    </div>
+</section>
+</body>
+
+</html>
