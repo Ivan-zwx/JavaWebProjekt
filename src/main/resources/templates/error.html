@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}" xmlns="http://www.w3.org/1999/html">
+
+<head>
+    <meta charset="UTF-8">
+</head>
+
+<body>
+<section layout:fragment="content">
+    <div class="container mt-4">
+        <div class="alert alert-danger" role="alert">
+            <h4 class="alert-heading">Something Went Wrong</h4>
+        </div>
+
+        <!-- Display Error Details -->
+        <div class="card">
+            <div class="card-header">
+                Error Details
+            </div>
+            <div class="card-body">
+                <h5 class="card-title">Status Code</h5>
+                <p class="card-text" th:text="${statusCode != null ? statusCode : 'Unknown'}"></p>
+
+                <h5 class="card-title">Error Message</h5>
+                <p class="card-text" th:text="${message != null ? message : 'Unknown'}"></p>
+
+                <h5 class="card-title">Exception Type</h5>
+                <p class="card-text" th:text="${exceptionType != null ? exceptionType : 'Unknown'}"></p>
+
+                <h5 class="card-title">Exception</h5>
+                <p class="card-text" th:text="${exception != null ? exception : 'Unknown'}"></p>
+
+                <h5 class="card-title">Servlet Name</h5>
+                <p class="card-text" th:text="${servletName != null ? servletName : 'Unknown'}"></p>
+            </div>
+        </div>
+    </div>
+</section>
+</body>
+
+</html>
