@@ -26,14 +26,12 @@
         <table class="table table-bordered table-hover" id="adminCategoriesTable">
             <thead>
             <tr>
-                <th>Category ID</th>
                 <th>Category Name</th>
                 <th>Action</th>
             </tr>
             </thead>
             <tbody>
             <tr th:each="category : ${categories}" th:data-category-id="${category.idKategorija}">
-                <td th:text="${category.idKategorija}"></td>
                 <td th:text="${category.naziv}"></td>
                 <td>
                     <a th:href="@{'/admin/categories/edit?id=' + ${category.idKategorija}}"
