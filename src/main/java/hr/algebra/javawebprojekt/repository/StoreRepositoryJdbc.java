@@ -150,5 +150,25 @@ public class StoreRepositoryJdbc implements StoreRepository {
 
     /********************************************************************************************************************************/
 
+    @Override
+    public void addProduct(Proizvod product) {
+        String sql = "INSERT INTO Proizvod (KategorijaID, Naziv, Cijena, DostupnaKolicina) VALUES (?, ?, ?, ?)";
+        jdbcTemplate.update(sql, product.getKategorijaID(), product.getNaziv(), product.getCijena(), product.getDostupnaKolicina());
+    }
+
+    @Override
+    public void updateProduct(Proizvod product) {
+        String sql = "UPDATE Proizvod SET KategorijaID = ?, Naziv = ?, Cijena = ?, DostupnaKolicina = ? WHERE IDProizvod = ?";
+        jdbcTemplate.update(sql, product.getKategorijaID(), product.getNaziv(), product.getCijena(), product.getDostupnaKolicina(), product.getIdProizvod());
+    }
+
+    @Override
+    public void deleteProductById(int id) {
+        String sql = "DELETE FROM Proizvod WHERE IDProizvod = ?";
+        jdbcTemplate.update(sql, id);
+    }
+
+    /********************************************************************************************************************************/
+
 
 }

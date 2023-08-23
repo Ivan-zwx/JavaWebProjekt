@@ -16,4 +16,8 @@ public interface StoreRepository {
     Proizvod getProductById(int productId);
     void savePurchase(Cart cart, String username, String nacinKupovine);
     PurchaseHistoryDto getPurchaseHistoryForUser(String username);
+    /**********************************************************************************/
+    void addProduct(Proizvod product);
+    void updateProduct(Proizvod product);
+    void deleteProductById(int id);
 }
