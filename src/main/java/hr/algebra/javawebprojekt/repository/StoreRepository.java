@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.Map;
 
 public interface StoreRepository {
+    /**********************************************************************************/
     List<Proizvod> getAllProducts();
     List<Kategorija> getAllCategories();
     Proizvod getProductById(int productId);
@@ -19,7 +20,13 @@ public interface StoreRepository {
     /**********************************************************************************/
     void addProduct(Proizvod product);
     void updateProduct(Proizvod product);
-    void deleteProductById(int id);
+    void deleteProductById(int productId);
     boolean productHasDependentItems(int productId);
-    //boolean categoryHasDependentProducts (int categoryId);
+    /**********************************************************************************/
+    void addCategory(Kategorija category);
+    void updateCategory(Kategorija category);
+    void deleteCategoryById(int categoryId);
+    Kategorija getCategoryById(int categoryId);
+    boolean categoryHasDependentProducts (int categoryId);
+    /**********************************************************************************/
 }

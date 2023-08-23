@@ -163,9 +163,9 @@ public class StoreRepositoryJdbc implements StoreRepository {
     }
 
     @Override
-    public void deleteProductById(int id) {
+    public void deleteProductById(int productId) {
         String sql = "DELETE FROM Proizvod WHERE IDProizvod = ?";
-        jdbcTemplate.update(sql, id);
+        jdbcTemplate.update(sql, productId);
     }
 
     @Override
@@ -177,7 +177,39 @@ public class StoreRepositoryJdbc implements StoreRepository {
 
     /********************************************************************************************************************************/
 
+    @Override
+    public Kategorija getCategoryById(int categoryId) {
+        String sql = "SELECT * FROM Kategorija WHERE IDKategorija = ?";
+        return jdbcTemplate.queryForObject(sql, new Object[]{categoryId}, (ResultSet rs, int rowNum) -> new Kategorija(
+                rs.getInt("IDKategorija"),
+                rs.getString("Naziv")
+        ));
+    }
 
+    @Override
+    public void addCategory(Kategorija category) {
+        String sql = "INSERT INTO Kategorija (Naziv) VALUES (?)";
+        jdbcTemplate.update(sql, category.getNaziv());
+    }
+
+    @Override
+    public void updateCategory(Kategorija category) {
+        String sql = "UPDATE Kategorija SET Naziv = ? WHERE IDKategorija = ?";
+        jdbcTemplate.update(sql, category.getNaziv(), category.getIdKategorija());
+    }
+
+    @Override
+    public void deleteCategoryById(int categoryId) {
+        String sql = "DELETE FROM Kategorija WHERE IDKategorija = ?";
+        jdbcTemplate.update(sql, categoryId);
+    }
+
+    @Override
+    public boolean categoryHasDependentProducts(int categoryId) {
+        String sql = "SELECT COUNT(*) FROM Proizvod WHERE KategorijaID = ?";
+        Integer count = jdbcTemplate.queryForObject(sql, new Object[]{categoryId}, Integer.class);
+        return (count != null && count > 0);
+    }
 
     /********************************************************************************************************************************/
 
