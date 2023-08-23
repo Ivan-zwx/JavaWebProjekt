@@ -20,4 +20,6 @@ public interface StoreRepository {
     void addProduct(Proizvod product);
     void updateProduct(Proizvod product);
     void deleteProductById(int id);
+    boolean productHasDependentItems(int productId);
+    //boolean categoryHasDependentProducts (int categoryId);
 }

@@ -13,6 +13,16 @@
     <div class="container mt-4">
         <h2 class="mb-4">Admin - Products</h2>
 
+        <div th:if="${deletionStatus == 'success'}" class="alert alert-success">
+            Deletion successful!
+        </div>
+        <div th:if="${deletionStatus == 'unable'}" class="alert alert-warning">
+            Unable to delete product. There are existing associated invoice items.
+        </div>
+        <div th:if="${deletionStatus == 'error'}" class="alert alert-danger">
+            An error occurred during deletion. Please try again.
+        </div>
+
         <select id="categoryDropdown" class="form-control mb-4" style="width: 250px;">
             <option value="all">All Categories</option>
             <option th:each="category : ${categories}" th:value="${category.naziv}"

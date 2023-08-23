@@ -22,7 +22,9 @@ public class AdminProductController {
 
 
     @GetMapping("")
-    public String getAllProducts(@RequestParam(required = false) Integer categoryID, Model model) {
+    public String getAllProducts(@RequestParam(required = false) Integer categoryID,
+                                 @RequestParam(required = false) String deletion,
+                                 Model model) {
         List<Proizvod> products = storeRepository.getAllProducts();
         List<Kategorija> categories = storeRepository.getAllCategories();
 
@@ -39,6 +41,9 @@ public class AdminProductController {
                 model.addAttribute("selectedCategoryName", selectedCategoryName);
             }
         }
+
+        model.addAttribute("deletionStatus", deletion);
+
         return "admin/products";
     }
 
@@ -75,7 +80,13 @@ public class AdminProductController {
 
     @GetMapping("/delete")
     public String deleteProduct(@RequestParam("id") Integer id) {
-        storeRepository.deleteProductById(id);
-        return "redirect:/admin/products";
+        if (!storeRepository.productHasDependentItems(id)) {
+            storeRepository.deleteProductById(id);
+            return "redirect:/admin/products?deletion=success";
+        } else if (storeRepository.productHasDependentItems(id)) {
+            return "redirect:/admin/products?deletion=unable";
+        } else {
+            return "redirect:/admin/products?deletion=error";
+        }
     }
 }

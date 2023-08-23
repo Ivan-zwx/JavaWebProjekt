@@ -36,9 +36,9 @@
                         <p style="color: darkblue; text-decoration: underline">Item ID: <span
                                 th:text="${stavkaDetail.idStavka}"></span></p>
                         <p>Product Name: <span th:text="${stavkaDetail.naziv}"></span></p>
-                        <p>Individual Product Price: <span th:text="${stavkaDetail.cijena} + ' €'"></span></p>
+                        <p>Individual Product Price (Current): <span th:text="${stavkaDetail.cijena} + ' €'"></span></p>
                         <p>Purchased Quantity: <span th:text="${stavkaDetail.kolicina}"></span></p>
-                        <p>Total Price: <span th:text="${stavkaDetail.cijena * stavkaDetail.kolicina} + ' €'"></span>
+                        <p>Total Price (Current): <span th:text="${stavkaDetail.cijena * stavkaDetail.kolicina} + ' €'"></span>
                         </p>
                     </li>
                 </ul>

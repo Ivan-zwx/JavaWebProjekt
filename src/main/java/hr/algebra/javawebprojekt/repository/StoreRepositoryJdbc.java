@@ -168,6 +168,13 @@ public class StoreRepositoryJdbc implements StoreRepository {
         jdbcTemplate.update(sql, id);
     }
 
+    @Override
+    public boolean productHasDependentItems(int productId) {
+        String sql = "SELECT COUNT(*) FROM Stavka WHERE ProizvodID = ?";
+        Integer count = jdbcTemplate.queryForObject(sql, new Object[]{productId}, Integer.class);
+        return (count != null && count > 0);
+    }
+
     /********************************************************************************************************************************/
 
 
