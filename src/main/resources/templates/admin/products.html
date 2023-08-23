@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{../layout}">
+
+<head>
+    <meta charset="UTF-8">
+</head>
+
+<body>
+<section layout:fragment="content">
+    <div class="container mt-4">
+        <h2 class="mb-4">Admin - Products</h2>
+
+        <select id="categoryDropdown" class="form-control mb-4" style="width: 250px;">
+            <option value="all">All Categories</option>
+            <option th:each="category : ${categories}" th:value="${category.naziv}"
+                    th:selected="${selectedCategoryName != null && category.naziv == selectedCategoryName}"
+                    th:text="${category.naziv}"></option>
+        </select>
+
+        <table class="table table-bordered table-hover" id="adminProductsTable">
+            <thead>
+            <tr>
+                <th>Category</th>
+                <th>Name</th>
+                <th>Price</th>
+                <th>Available Quantity</th>
+                <th>Action</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="product : ${products}" th:data-product-id="${product.idProizvod}">
+                <td th:text="${categoryMap.get(product.kategorijaID)}"></td>
+                <td th:text="${product.naziv}"></td>
+                <td th:text="${product.cijena} + ' €'"></td>
+                <td th:text="${product.dostupnaKolicina}"></td>
+                <td>
+                    <a th:href="@{'/admin/products/edit?id=' + ${product.idProizvod}}" class="btn btn-outline-primary">Update</a>
+                    <a th:href="@{'/admin/products/delete?id=' + ${product.idProizvod}}" class="btn btn-outline-danger">Delete</a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        <div class="mt-4">
+            <a th:href="@{/admin/products/add}" class="btn btn-outline-success">Add New Product</a>
+        </div>
+    </div>
+
+    <!-- DataTables initialization script and filtering logic -->
+    <script>
+        $(document).ready(function () {
+            var table = $('#adminProductsTable').DataTable();
+
+            $('#categoryDropdown').on('change', function () {
+                var selectedCategoryName = $(this).find("option:selected").text();
+
+                if (selectedCategoryName === "All Categories") {
+                    table.column(0).search('').draw();
+                } else {
+                    table.column(0).search(selectedCategoryName).draw();
+                }
+            }).trigger('change');
+        });
+    </script>
+</section>
+</body>
+
+</html>

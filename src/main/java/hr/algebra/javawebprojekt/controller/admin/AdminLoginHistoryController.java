@@ -5,7 +5,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-@RequestMapping("admin/categories")
+@RequestMapping("admin/logins")
 @AllArgsConstructor
-public class CategoryController {
+public class AdminLoginHistoryController {
 }

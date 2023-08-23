@@ -1,5 +1,6 @@
 package hr.algebra.javawebprojekt.controller.admin;
 
+import hr.algebra.javawebprojekt.domain.Kategorija;
 import hr.algebra.javawebprojekt.domain.Proizvod;
 import hr.algebra.javawebprojekt.repository.StoreRepository;
 import lombok.AllArgsConstructor;
@@ -7,19 +8,37 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+import java.util.Map;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("admin/products")
 @AllArgsConstructor
-public class ProductController {
+public class AdminProductController {
 
     private final StoreRepository storeRepository;
 
 
     @GetMapping("")
-    public String getAllProducts(Model model) {
-        model.addAttribute("products", storeRepository.getAllProducts());
+    public String getAllProducts(@RequestParam(required = false) Integer categoryID, Model model) {
+        List<Proizvod> products = storeRepository.getAllProducts();
+        List<Kategorija> categories = storeRepository.getAllCategories();
+
+        Map<Integer, String> categoryMap = categories.stream()
+                .collect(Collectors.toMap(Kategorija::getIdKategorija, Kategorija::getNaziv));
+
+        model.addAttribute("products", products);
+        model.addAttribute("categories", categories);
+        model.addAttribute("categoryMap", categoryMap);
+
+        if (categoryID != null) {
+            String selectedCategoryName = categoryMap.get(categoryID);
+            if (selectedCategoryName != null) {
+                model.addAttribute("selectedCategoryName", selectedCategoryName);
+            }
+        }
         return "admin/products";
     }
 
@@ -33,7 +52,7 @@ public class ProductController {
     @PostMapping("/add")
     public String addProduct(@ModelAttribute Proizvod product) {
         storeRepository.addProduct(product);
-        return "redirect:/admin/products/";
+        return "redirect:/admin/products";
     }
 
 
@@ -48,13 +67,13 @@ public class ProductController {
     @PostMapping("/edit")
     public String updateProduct(@ModelAttribute Proizvod product) {
         storeRepository.updateProduct(product);
-        return "redirect:/admin/products/";
+        return "redirect:/admin/products";
     }
 
 
     @GetMapping("/delete")
     public String deleteProduct(@RequestParam("id") Integer id) {
         storeRepository.deleteProductById(id);
-        return "redirect:/admin/products/";
+        return "redirect:/admin/products";
     }
 }

@@ -7,5 +7,5 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 @RequestMapping("admin/purchases")
 @AllArgsConstructor
-public class PurchaseHistoryController {
+public class AdminPurchaseHistoryController {
 }
