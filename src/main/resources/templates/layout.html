@@ -68,6 +68,18 @@
     </div>
 </nav>
 
+<!-- Admin-specific navigation -->
+<div sec:authorize="hasAuthority('ROLE_ADMIN')">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div>
+            <a class="navbar-brand text-white" th:href="@{/admin/products}">Products</a>
+            <a class="navbar-brand text-white" th:href="@{/admin/categories}">Categories</a>
+            <a class="navbar-brand text-white" th:href="@{/admin/logins}">Login History</a>
+            <a class="navbar-brand text-white" th:href="@{/admin/purchases}">User Purchase History</a>
+        </div>
+    </nav>
+</div>
+
 <section layout:fragment="content">
     <p>Page content goes here</p>
 </section>
