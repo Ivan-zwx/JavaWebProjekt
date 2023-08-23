@@ -12,7 +12,7 @@ import java.util.Optional;
 @Controller
 @RequestMapping("admin/products")
 @AllArgsConstructor
-public class AdminProductController {
+public class ProductController {
 
     private final StoreRepository storeRepository;
 
@@ -20,7 +20,7 @@ public class AdminProductController {
     @GetMapping("")
     public String getAllProducts(Model model) {
         model.addAttribute("products", storeRepository.getAllProducts());
-        return "admin/list-products";
+        return "admin/products";
     }
 
 
@@ -42,7 +42,7 @@ public class AdminProductController {
         Optional<Proizvod> productOptional = Optional.ofNullable(storeRepository.getProductById(id));
         Proizvod product = productOptional.orElseThrow(() -> new IllegalArgumentException("Invalid product Id: " + id));
         model.addAttribute("product", product);
-        return "admin/edit-product";
+        return "admin/update-product";
     }
 
     @PostMapping("/edit")
