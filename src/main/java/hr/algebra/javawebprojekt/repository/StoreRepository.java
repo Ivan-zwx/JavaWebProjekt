@@ -27,5 +27,6 @@ public interface StoreRepository {
     boolean categoryHasDependentProducts (int categoryId);
     /**********************************************************************************/
     void addRequestHistory(RequestHistory requestHistory);
+    void addLoginHistory(LoginHistory loginHistory);
     /**********************************************************************************/
 }

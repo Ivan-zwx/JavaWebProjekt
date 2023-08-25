@@ -1,10 +1,6 @@
 package hr.algebra.javawebprojekt.repository;
 
-import hr.algebra.javawebprojekt.domain.Kategorija;
-import hr.algebra.javawebprojekt.domain.Proizvod;
-import hr.algebra.javawebprojekt.domain.Racun;
-import hr.algebra.javawebprojekt.domain.Stavka;
-import hr.algebra.javawebprojekt.domain.RequestHistory;
+import hr.algebra.javawebprojekt.domain.*;
 import hr.algebra.javawebprojekt.dto.PurchaseHistoryDto;
 import hr.algebra.javawebprojekt.session.Cart;
 import org.springframework.context.annotation.Primary;
@@ -219,6 +215,13 @@ public class StoreRepositoryJdbc implements StoreRepository {
         String sql = "INSERT INTO RequestHistory (username, vrijemeRequesta, request) VALUES (?, ?, ?)";
         jdbcTemplate.update(sql, requestHistory.getUsername(), requestHistory.getVrijemeRequesta(), requestHistory.getRequest());
     }
+
+    @Override
+    public void addLoginHistory(LoginHistory loginHistory) {
+        String sql = "INSERT INTO LoginHistory (username, vrijemeLogina, ipAdresa) VALUES (?, ?, ?)";
+        jdbcTemplate.update(sql, loginHistory.getUsername(), loginHistory.getVrijemeLogina(), loginHistory.getIpAdresa());
+    }
+
 
     /********************************************************************************************************************************/
 }
