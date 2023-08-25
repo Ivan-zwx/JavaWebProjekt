@@ -77,12 +77,20 @@ create table [Stavka]
 	[Kolicina] int
 )
 
-create table [Login]
+create table [LoginHistory]
 (
-	[IDLogin] int primary key identity,
-	[username] nvarchar(300) foreign key references [users]([username]),
+	[IDLoginHistory] int primary key identity,
+	[username] nvarchar(300),
 	[VrijemeLogina] nvarchar(300),
 	[IPAdresa] nvarchar(300)
+)
+
+create table [RequestHistory]
+(
+	[IDRequestHistory] int primary key identity,
+	[username] nvarchar(300),
+	[VrijemeRequesta] nvarchar(300),
+	[Request] nvarchar(3000)
 )
 
 ----------------------------------------------------------------------------------------------------------------------------------------------------------
