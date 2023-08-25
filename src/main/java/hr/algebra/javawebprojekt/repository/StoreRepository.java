@@ -1,9 +1,6 @@
 package hr.algebra.javawebprojekt.repository;
 
-import hr.algebra.javawebprojekt.domain.Kategorija;
-import hr.algebra.javawebprojekt.domain.Proizvod;
-import hr.algebra.javawebprojekt.domain.Racun;
-import hr.algebra.javawebprojekt.domain.Stavka;
+import hr.algebra.javawebprojekt.domain.*;
 import hr.algebra.javawebprojekt.dto.PurchaseHistoryDto;
 import hr.algebra.javawebprojekt.session.Cart;
 
@@ -28,5 +25,7 @@ public interface StoreRepository {
     void deleteCategoryById(int categoryId);
     Kategorija getCategoryById(int categoryId);
     boolean categoryHasDependentProducts (int categoryId);
+    /**********************************************************************************/
+    void addRequestHistory(RequestHistory requestHistory);
     /**********************************************************************************/
 }

@@ -4,6 +4,7 @@ import hr.algebra.javawebprojekt.domain.Kategorija;
 import hr.algebra.javawebprojekt.domain.Proizvod;
 import hr.algebra.javawebprojekt.domain.Racun;
 import hr.algebra.javawebprojekt.domain.Stavka;
+import hr.algebra.javawebprojekt.domain.RequestHistory;
 import hr.algebra.javawebprojekt.dto.PurchaseHistoryDto;
 import hr.algebra.javawebprojekt.session.Cart;
 import org.springframework.context.annotation.Primary;
@@ -213,4 +214,11 @@ public class StoreRepositoryJdbc implements StoreRepository {
 
     /********************************************************************************************************************************/
 
+    @Override
+    public void addRequestHistory(RequestHistory requestHistory) {
+        String sql = "INSERT INTO RequestHistory (username, vrijemeRequesta, request) VALUES (?, ?, ?)";
+        jdbcTemplate.update(sql, requestHistory.getUsername(), requestHistory.getVrijemeRequesta(), requestHistory.getRequest());
+    }
+
+    /********************************************************************************************************************************/
 }
