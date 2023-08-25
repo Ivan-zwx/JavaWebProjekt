@@ -9,7 +9,7 @@ import java.util.Objects;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Login {
+public class LoginHistory {
 
     private Integer idLogin;
     private String username;
@@ -20,11 +20,11 @@ public class Login {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Login login = (Login) o;
-        return idLogin.equals(login.idLogin) &&
-                username.equals(login.username) &&
-                vrijemeLogina.equals(login.vrijemeLogina) &&
-                ipAdresa.equals(login.ipAdresa);
+        LoginHistory loginHistory = (LoginHistory) o;
+        return idLogin.equals(loginHistory.idLogin) &&
+                username.equals(loginHistory.username) &&
+                vrijemeLogina.equals(loginHistory.vrijemeLogina) &&
+                ipAdresa.equals(loginHistory.ipAdresa);
     }
 
     @Override
