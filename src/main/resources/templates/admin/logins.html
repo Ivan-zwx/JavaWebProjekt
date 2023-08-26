@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+<head>
+    <meta charset="UTF-8">
+</head>
+
+<body>
+<section layout:fragment="content">
+    <div class="container mt-4">
+        <h2 class="mb-4">Admin - Login History</h2>
+
+        <table class="table table-bordered table-hover" id="adminLoginHistoryTable">
+            <thead>
+            <tr>
+                <th>Username</th>
+                <th>Timestamp</th>
+                <th>IP Address</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="loginHistory : ${completeLoginHistory}">
+                <td th:text="${loginHistory.username}"></td>
+                <td th:text="${loginHistory.vrijemeLogina}"></td>
+                <td th:text="${loginHistory.ipAdresa}"></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- DataTables initialization script -->
+    <script>
+        $(document).ready(function () {
+            $('#adminLoginHistoryTable').DataTable();
+        });
+    </script>
+</section>
+</body>
+</html>

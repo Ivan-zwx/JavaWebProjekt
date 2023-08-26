@@ -29,4 +29,6 @@ public interface StoreRepository {
     void addRequestHistory(RequestHistory requestHistory);
     void addLoginHistory(LoginHistory loginHistory);
     /**********************************************************************************/
+    List<LoginHistory> getCompleteLoginHistory();
+    /**********************************************************************************/
 }

@@ -224,4 +224,17 @@ public class StoreRepositoryJdbc implements StoreRepository {
 
 
     /********************************************************************************************************************************/
+
+    @Override
+    public List<LoginHistory> getCompleteLoginHistory() {
+        String sql = "SELECT * FROM LoginHistory";
+        return jdbcTemplate.query(sql, (ResultSet rs, int rowNum) -> new LoginHistory(
+                rs.getInt("IDLoginHistory"),
+                rs.getString("username"),
+                rs.getString("VrijemeLogina"),
+                rs.getString("IPAdresa")
+        ));
+    }
+
+    /********************************************************************************************************************************/
 }
