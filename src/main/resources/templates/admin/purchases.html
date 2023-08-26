@@ -2,9 +2,55 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Admin - Complete Purchase History</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 <body>
+<h1>Admin Dashboard: Complete Purchase History</h1>
 
+<div id="purchaseHistoryContainer">
+    <!-- Purchase history will be displayed here -->
+</div>
+
+<script>
+    $(document).ready(function() {
+        $.ajax({
+            url: "/api/admin/purchases",  // Change this to your actual API URL
+            type: "GET",
+            dataType: "json",
+            success: function(data) {
+                let content = "";
+                data.forEach((purchaseHistory, index) => {
+                    content += `<h2>User: ${index + 1}</h2>`; // Replace with username if available
+
+                    purchaseHistory.racunDetailsList.forEach((racunDetail) => {
+                        content += `<h3>Invoice ID: ${racunDetail.racun.idRacun}</h3>`;
+                        content += `<p>Time of Purchase: ${racunDetail.racun.vrijemeKupovine}</p>`;
+                        content += `<p>Payment Method: ${racunDetail.racun.nacinKupovine}</p>`;
+                        content += `<p>Grand Total: ${racunDetail.racun.ukupnaCijena} €</p>`;
+
+                        content += `<h4>Items:</h4>`;
+                        content += `<ul>`;
+
+                        racunDetail.stavkeDetails.forEach((stavkaDetail) => {
+                            content += `<li>Item ID: ${stavkaDetail.idStavka}</li>`;
+                            content += `<li>Product Name: ${stavkaDetail.naziv}</li>`;
+                            content += `<li>Individual Product Price: ${stavkaDetail.cijena} €</li>`;
+                            content += `<li>Purchased Quantity: ${stavkaDetail.kolicina}</li>`;
+                            content += `<li>Total Price: ${stavkaDetail.cijena * stavkaDetail.kolicina} €</li>`;
+                        });
+
+                        content += `</ul>`;
+                    });
+                });
+
+                $("#purchaseHistoryContainer").html(content);
+            },
+            error: function(error) {
+                console.log("Error fetching data:", error);
+            }
+        });
+    });
+</script>
 </body>
 </html>

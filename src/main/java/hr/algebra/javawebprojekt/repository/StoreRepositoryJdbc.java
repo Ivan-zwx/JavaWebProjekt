@@ -237,4 +237,24 @@ public class StoreRepositoryJdbc implements StoreRepository {
     }
 
     /********************************************************************************************************************************/
+
+    private List<String> getAllUsernames() {
+        String sql = "SELECT username FROM users";
+        return jdbcTemplate.queryForList(sql, String.class);
+    }
+
+    @Override
+    public List<PurchaseHistoryDto> getCompletePurchaseHistory() {
+        List<PurchaseHistoryDto> completePurchaseHistory = new ArrayList<>();
+
+        List<String> allUsernames = getAllUsernames();
+        for (String username : allUsernames) {
+            PurchaseHistoryDto purchaseHistory = getPurchaseHistoryForUser(username);
+            completePurchaseHistory.add(purchaseHistory);
+        }
+
+        return completePurchaseHistory;
+    }
+
+    /********************************************************************************************************************************/
 }

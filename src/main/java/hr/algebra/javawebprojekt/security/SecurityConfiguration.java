@@ -33,6 +33,7 @@ public class SecurityConfiguration {
                         .requestMatchers("/store/checkout/**").hasAuthority("ROLE_USER")
                         .requestMatchers("/store/purchases/**").hasAuthority("ROLE_USER")
                         .requestMatchers("/admin/**").hasAuthority("ROLE_ADMIN")
+                        .requestMatchers("/api/admin/**").hasAuthority("ROLE_ADMIN")
                         .requestMatchers(resources).permitAll()
                         .anyRequest().authenticated())
                 .formLogin(form -> form
