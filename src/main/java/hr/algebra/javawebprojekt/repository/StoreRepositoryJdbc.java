@@ -239,7 +239,7 @@ public class StoreRepositoryJdbc implements StoreRepository {
     /********************************************************************************************************************************/
 
     private List<String> getAllUsernames() {
-        String sql = "SELECT username FROM users";
+        String sql = "SELECT u.username FROM users u JOIN authorities a ON u.username = a.username WHERE a.authority = 'ROLE_USER'";
         return jdbcTemplate.queryForList(sql, String.class);
     }
 
