@@ -51,10 +51,11 @@
         $(document).ready(function () {
             $(".timestamp").each(function () {
                 let rawTimestamp = $(this).attr('data-raw-timestamp');
-                rawTimestamp = rawTimestamp.slice(0, 23) + 'Z';
-                let date = new Date(rawTimestamp);
-                let formattedDate = `${date.getDate().toString().padStart(2, '0')}/${(date.getMonth() + 1).toString().padStart(2, '0')}/${date.getFullYear()} at ${date.getHours().toString().padStart(2, '0')}:${date.getMinutes().toString().padStart(2, '0')}:${date.getSeconds().toString().padStart(2, '0')}`;
-                $(this).text(formattedDate);
+                let [datePart, timePart] = rawTimestamp.split("T");
+                let [year, month, day] = datePart.split("-");
+                let [hour, minute, second] = timePart.split(":").map(str => parseInt(str, 10));
+                let formattedDateTime = `${day.padStart(2, '0')}/${month.padStart(2, '0')}/${year} at ${hour.toString().padStart(2, '0')}:${minute.toString().padStart(2, '0')}:${second.toString().padStart(2, '0')}`;
+                $(this).text(formattedDateTime);
             });
         });
     </script>

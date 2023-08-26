@@ -19,6 +19,13 @@
     </div>
 
     <script>
+        function formatDateTime(rawTimestamp) {
+            let [datePart, timePart] = rawTimestamp.split("T");
+            let [year, month, day] = datePart.split("-");
+            let [hour, minute, second] = timePart.split(":").map(str => parseInt(str, 10));
+            return `${day.padStart(2, '0')}/${month.padStart(2, '0')}/${year} at ${hour.toString().padStart(2, '0')}:${minute.toString().padStart(2, '0')}:${second.toString().padStart(2, '0')}`;
+        }
+
         $(document).ready(function () {
             $.ajax({
                 url: "/api/admin/purchases",
@@ -35,9 +42,10 @@
                                         <ul class="list-group mt-2">`;
 
                         userPurchases.racunDetailsList.forEach((invoice) => {
+                            let formattedDateTime = formatDateTime(invoice.racun.vrijemeKupovine);
                             content += `<li class="list-group-item">
                                             <h5 style="color: midnightblue; text-decoration: underline">Invoice ID: ${invoice.racun.idRacun}</h5>
-                                            <p>Time of Purchase: ${invoice.racun.vrijemeKupovine}</p>
+                                            <p>Time of Purchase: ${formattedDateTime}</p>
                                             <p>Payment Method: ${invoice.racun.nacinKupovine}</p>
                                             <p>Grand Total: ${invoice.racun.ukupnaCijena} €</p>
                                             <ul class="list-group mt-2">`;
