@@ -26,50 +26,47 @@
             return `${day.padStart(2, '0')}/${month.padStart(2, '0')}/${year} at ${hour.toString().padStart(2, '0')}:${minute.toString().padStart(2, '0')}:${second.toString().padStart(2, '0')}`;
         }
 
-        $(document).ready(function () {
-            $.ajax({
-                url: "/api/admin/purchases",
-                type: "GET",
-                dataType: "json",
-                success: function (data) {
-                    let content = '<ul class="list-group mb-5">';
-
-                    data.forEach((userPurchases, index) => {
-                        let username = userPurchases.racunDetailsList[0].racun.username;
-
-                        content += `<li class="list-group-item">
+        function renderData(data) {
+            let content = '<ul class="list-group mb-5">';
+            data.forEach((userPurchases, index) => {
+                let username = userPurchases.racunDetailsList[0].racun.username;
+                content += `<li class="list-group-item">
                                         <h4 style="color: indianred; text-decoration: underline">Username: ${username}</h4>
                                         <ul class="list-group mt-2">`;
-
-                        userPurchases.racunDetailsList.forEach((invoice) => {
-                            let formattedDateTime = formatDateTime(invoice.racun.vrijemeKupovine);
-                            content += `<li class="list-group-item">
+                userPurchases.racunDetailsList.forEach((invoice) => {
+                    let formattedDateTime = formatDateTime(invoice.racun.vrijemeKupovine);
+                    content += `<li class="list-group-item">
                                             <h5 style="color: midnightblue; text-decoration: underline">Invoice ID: ${invoice.racun.idRacun}</h5>
                                             <p>Time of Purchase: ${formattedDateTime}</p>
                                             <p>Payment Method: ${invoice.racun.nacinKupovine}</p>
                                             <p>Grand Total: ${invoice.racun.ukupnaCijena} €</p>
                                             <ul class="list-group mt-2">`;
-
-                            invoice.stavkeDetails.forEach((item) => {
-                                content += `<li class="list-group-item">
+                    invoice.stavkeDetails.forEach((item) => {
+                        content += `<li class="list-group-item">
                                                 <p style="color: darkblue; text-decoration: underline">Item ID: ${item.idStavka}</p>
                                                 <p>Product Name: ${item.naziv}</p>
                                                 <p>Individual Product Price (Current): ${item.cijena} €</p>
                                                 <p>Purchased Quantity: ${item.kolicina}</p>
                                                 <p>Total Price (Current): ${item.cijena * item.kolicina} €</p>
                                             </li>`;
-                            });
-
-                            content += `</ul>
-                                        </li>`;
-                        });
-
-                        content += `</ul>
-                                    </li>`;
                     });
+                    content += `</ul>
+                                        </li>`;
+                });
+                content += `</ul>
+                                    </li>`;
+            });
+            content += '</ul>';
+            $("#purchaseHistoryContainer").html(content);
+        }
 
-                    content += '</ul>';
-                    $("#purchaseHistoryContainer").html(content);
+        $(document).ready(function () {
+            $.ajax({
+                url: "/api/admin/purchases",
+                type: "GET",
+                dataType: "json",
+                success: function (data) {
+                    renderData(data)
                 },
                 error: function (error) {
                     console.log("Error fetching data:", error);
