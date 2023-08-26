@@ -13,9 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @Primary
 @Repository
@@ -238,16 +236,25 @@ public class StoreRepositoryJdbc implements StoreRepository {
 
     /********************************************************************************************************************************/
 
-    private List<String> getAllUsernames() {
-        String sql = "SELECT u.username FROM users u JOIN authorities a ON u.username = a.username WHERE a.authority = 'ROLE_USER'";
+    private List<String> getAllUsernamesWithInvoices() {
+        String sql =
+                "SELECT u.username " +
+                "FROM users u " +
+                "JOIN authorities a ON u.username = a.username " +
+                "LEFT JOIN Racun r ON u.username = r.username " +
+                "WHERE a.authority = 'ROLE_USER' " +
+                "GROUP BY u.username " +
+                "HAVING COUNT(r.IDRacun) > 0";
+
         return jdbcTemplate.queryForList(sql, String.class);
     }
+
 
     @Override
     public List<PurchaseHistoryDto> getCompletePurchaseHistory() {
         List<PurchaseHistoryDto> completePurchaseHistory = new ArrayList<>();
 
-        List<String> allUsernames = getAllUsernames();
+        List<String> allUsernames = getAllUsernamesWithInvoices();
         for (String username : allUsernames) {
             PurchaseHistoryDto purchaseHistory = getPurchaseHistoryForUser(username);
             completePurchaseHistory.add(purchaseHistory);
