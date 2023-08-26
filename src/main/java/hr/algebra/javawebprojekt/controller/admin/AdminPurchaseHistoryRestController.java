@@ -33,10 +33,10 @@ public class AdminPurchaseHistoryRestController {
             @RequestParam(name = "startDate", required = false) String startDateStr,
             @RequestParam(name = "endDate", required = false) String endDateStr) {
 
-        List<PurchaseHistoryDto> allPurchases = storeRepository.getCompletePurchaseHistory();
+        List<PurchaseHistoryDto> completePurchaseHistory = storeRepository.getCompletePurchaseHistory();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss");
 
-        return allPurchases.stream()
+        return completePurchaseHistory.stream()
                 .filter(dto -> dto.getRacunDetailsList().stream().anyMatch(racunDetails -> {
                     if (username != null) {
                         return username.equals(racunDetails.getRacun().getUsername());
@@ -49,16 +49,12 @@ public class AdminPurchaseHistoryRestController {
                                     if (startDateStr != null) {
                                         LocalDateTime startDate = LocalDateTime.parse(startDateStr, formatter);
                                         LocalDateTime invoiceDate = LocalDateTime.parse(racunDetails.getRacun().getVrijemeKupovine(), formatter);
-                                        if (invoiceDate.isBefore(startDate)) {
-                                            return false;
-                                        }
+                                        return !invoiceDate.isBefore(startDate);
                                     }
                                     if (endDateStr != null) {
                                         LocalDateTime endDate = LocalDateTime.parse(endDateStr, formatter);
                                         LocalDateTime invoiceDate = LocalDateTime.parse(racunDetails.getRacun().getVrijemeKupovine(), formatter);
-                                        if (invoiceDate.isAfter(endDate)) {
-                                            return false;
-                                        }
+                                        return !invoiceDate.isAfter(endDate);
                                     }
                                     return true;
                                 })

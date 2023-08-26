@@ -13,6 +13,25 @@
     <div class="container mt-4">
         <h2 class="mb-4">Admin - Purchase History</h2>
 
+        <!-- Filter Form -->
+        <form id="filterForm" class="mb-4">
+            <div class="form-row">
+                <div class="form-group col-md-4">
+                    <label for="username">Username</label>
+                    <input type="text" class="form-control" id="username">
+                </div>
+                <div class="form-group col-md-4">
+                    <label for="startDate">Start Date</label>
+                    <input type="datetime-local" class="form-control" id="startDate">
+                </div>
+                <div class="form-group col-md-4">
+                    <label for="endDate">End Date</label>
+                    <input type="datetime-local" class="form-control" id="endDate">
+                </div>
+            </div>
+            <button type="button" class="btn btn-outline-primary mt-3 mb-3" onclick="fetchData()">Filter</button>
+        </form>
+
         <div id="purchaseHistoryContainer">
             <!-- Purchase history displayed here -->
         </div>
@@ -60,10 +79,19 @@
             $("#purchaseHistoryContainer").html(content);
         }
 
-        $(document).ready(function () {
+        function fetchData() {
+            const username = $('#username').val();
+            const startDate = $('#startDate').val();
+            const endDate = $('#endDate').val();
+
             $.ajax({
-                url: "/api/admin/purchases",
+                url: `/api/admin/purchases`,
                 type: "GET",
+                data: {
+                    username: username,
+                    startDate: startDate,
+                    endDate: endDate
+                },
                 dataType: "json",
                 success: function (data) {
                     renderData(data)
@@ -72,6 +100,10 @@
                     console.log("Error fetching data:", error);
                 }
             });
+        }
+
+        $(document).ready(function () {
+            fetchData();
         });
     </script>
 </section>
