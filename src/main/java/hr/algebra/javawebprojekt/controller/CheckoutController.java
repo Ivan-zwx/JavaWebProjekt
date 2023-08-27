@@ -31,35 +31,30 @@ public class CheckoutController {
 
     @PostMapping("/process")
     public String checkout(@ModelAttribute("cart") Cart cart,
-                           @RequestParam String paymentMethod,
-                           Authentication authentication) {
+                           @RequestParam String paymentMethod) {
 
         if (cart.isEmpty()) {
             return "redirect:/store/cart?purchase=empty_cart";
         }
 
-        String username = authentication.getName();
-
         if ("Cash".equals(paymentMethod)) {
-            storeRepository.savePurchase(cart, username, paymentMethod);
-            cart.removeAllItems();
-            return "redirect:/store/cart?purchase=success";
+            return "redirect:/store/cart?purchase=success&paymentMethod=Cash";
         } else if ("Paypal".equals(paymentMethod)) {
             try {
                 double totalAmount = cart.getTotal();
                 Payment payment = paypalService.createPayment(totalAmount, "EUR", "paypal", "sale",
                         "Test payment",
-                        "http://localhost:8081/store/cart?purchase=error",
-                        "http://localhost:8081/store/cart?purchase=success");
+                        "http://localhost:8081/store/cart?purchase=error&paymentMethod=Paypal",
+                        "http://localhost:8081/store/cart?purchase=success&paymentMethod=Paypal");
                 for(Links link : payment.getLinks()) {
                     if(link.getRel().equals("approval_url")) {
                         return "redirect:" + link.getHref();
                     }
                 }
-                return "redirect:/store/cart?purchase=error";
+                return "redirect:/store/cart?purchase=error&paymentMethod=Paypal";
             } catch (PayPalRESTException e) {
                 e.printStackTrace();
-                return "redirect:/store/cart?purchase=error";
+                return "redirect:/store/cart?purchase=error&paymentMethod=Paypal";
             }
         } else {
             return "redirect:/store/cart?purchase=error";
