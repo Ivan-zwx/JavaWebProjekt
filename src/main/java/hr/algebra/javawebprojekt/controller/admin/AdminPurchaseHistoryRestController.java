@@ -34,11 +34,20 @@ public class AdminPurchaseHistoryRestController {
             @RequestParam(name = "endDate", required = false) String endDateStr) {
 
         List<PurchaseHistoryDto> completePurchaseHistory = storeRepository.getCompletePurchaseHistory();
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss");
+        DateTimeFormatter dataFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSSSSSSSS");
+        DateTimeFormatter parameterFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm");
 
-        return completePurchaseHistory.stream()
+        //System.out.println("**************************************************");
+        //System.out.println("Server method getCompletePurchaseHistory called");
+        //System.out.println("Username: " + username);
+        //System.out.println("StartDate: " + startDateStr);
+        //System.out.println("EndDate: " + endDateStr);
+
+        //System.out.println("Total records fetched: " + completePurchaseHistory.size());
+
+        List<PurchaseHistoryDto> filteredPurchaseHistory = completePurchaseHistory.stream()
                 .filter(dto -> dto.getRacunDetailsList().stream().anyMatch(racunDetails -> {
-                    if (username != null) {
+                    if (username != null && !username.isBlank()) {
                         return username.equals(racunDetails.getRacun().getUsername());
                     }
                     return true;
@@ -46,14 +55,14 @@ public class AdminPurchaseHistoryRestController {
                 .map(dto -> new PurchaseHistoryDto(
                         dto.getRacunDetailsList().stream()
                                 .filter(racunDetails -> {
-                                    if (startDateStr != null) {
-                                        LocalDateTime startDate = LocalDateTime.parse(startDateStr, formatter);
-                                        LocalDateTime invoiceDate = LocalDateTime.parse(racunDetails.getRacun().getVrijemeKupovine(), formatter);
+                                    if (startDateStr != null && !startDateStr.isBlank()) {
+                                        LocalDateTime startDate = LocalDateTime.parse(startDateStr, parameterFormatter);
+                                        LocalDateTime invoiceDate = LocalDateTime.parse(racunDetails.getRacun().getVrijemeKupovine(), dataFormatter);
                                         return !invoiceDate.isBefore(startDate);
                                     }
-                                    if (endDateStr != null) {
-                                        LocalDateTime endDate = LocalDateTime.parse(endDateStr, formatter);
-                                        LocalDateTime invoiceDate = LocalDateTime.parse(racunDetails.getRacun().getVrijemeKupovine(), formatter);
+                                    if (endDateStr != null && !endDateStr.isBlank()) {
+                                        LocalDateTime endDate = LocalDateTime.parse(endDateStr, parameterFormatter);
+                                        LocalDateTime invoiceDate = LocalDateTime.parse(racunDetails.getRacun().getVrijemeKupovine(), dataFormatter);
                                         return !invoiceDate.isAfter(endDate);
                                     }
                                     return true;
@@ -62,5 +71,10 @@ public class AdminPurchaseHistoryRestController {
                 ))
                 .filter(dto -> !dto.getRacunDetailsList().isEmpty())
                 .collect(Collectors.toList());
+
+        //System.out.println("Total records after filtering: " + filteredPurchaseHistory.size());
+        //System.out.println("**************************************************");
+
+        return filteredPurchaseHistory;
     }
 }
