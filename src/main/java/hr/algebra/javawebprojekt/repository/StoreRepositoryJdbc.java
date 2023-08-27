@@ -83,8 +83,10 @@ public class StoreRepositoryJdbc implements StoreRepository {
         List<Stavka> stavke = cart.generateStavke(racunId);
 
         final String insertStavkaSql = "INSERT INTO Stavka (racunID, proizvodID, kolicina) VALUES (?, ?, ?)";
+        final String updateProizvodSql = "UPDATE Proizvod SET DostupnaKolicina = DostupnaKolicina - ? WHERE IDProizvod = ?";
         for (Stavka stavka : stavke) {
             jdbcTemplate.update(insertStavkaSql, stavka.getRacunID(), stavka.getProizvodID(), stavka.getKolicina());
+            jdbcTemplate.update(updateProizvodSql, stavka.getKolicina(), stavka.getProizvodID());
         }
     }
 
