@@ -1,3 +1,27 @@
 Manifest-Version: 1.0
 Main-Class: hr.algebra.javawebprojekt.JavaWebProjektApplication
+Class-Path: spring-webmvc-6.0.11.jar spring-beans-6.0.11.jar HikariCP-5.
+ 0.1.jar mssql-jdbc-12.4.0.jre11.jar thymeleaf-expression-processor-3.1.
+ 1.jar javassist-3.29.0-GA.jar spring-security-crypto-6.1.2.jar log4j-to
+ -slf4j-2.20.0.jar spring-boot-starter-web-3.1.2.jar thymeleaf-layout-di
+ alect-3.2.1.jar spring-security-web-6.1.2.jar slf4j-api-2.0.7.jar groov
+ y-4.0.13.jar spring-jdbc-6.0.11.jar spring-tx-6.0.11.jar jackson-annota
+ tions-2.15.2.jar spring-boot-3.1.2.jar ognl-3.3.4.jar jul-to-slf4j-2.0.
+ 7.jar jackson-databind-2.15.2.jar thymeleaf-3.1.1.RELEASE.jar logback-c
+ lassic-1.4.8.jar log4j-api-2.20.0.jar jackson-module-parameter-names-2.
+ 15.2.jar spring-jcl-6.0.11.jar spring-security-config-6.1.2.jar microme
+ ter-observation-1.11.2.jar spring-boot-starter-security-3.1.2.jar sprin
+ g-security-core-6.1.2.jar gson-2.10.1.jar spring-boot-starter-tomcat-3.
+ 1.2.jar thymeleaf-spring6-3.1.1.RELEASE.jar tomcat-embed-core-10.1.11.j
+ ar spring-expression-6.0.11.jar tomcat-embed-el-10.1.11.jar lombok-1.18
+ .28.jar jackson-datatype-jdk8-2.15.2.jar snakeyaml-1.33.jar spring-cont
+ ext-6.0.11.jar rest-api-sdk-1.14.0.jar spring-aop-6.0.11.jar spring-web
+ -6.0.11.jar spring-boot-starter-thymeleaf-3.1.2.jar groovy-extensions-2
+ .1.0.jar jackson-datatype-jsr310-2.15.2.jar thymeleaf-extras-springsecu
+ rity6-3.1.2.RELEASE.jar spring-boot-starter-3.1.2.jar spring-boot-autoc
+ onfigure-3.1.2.jar logback-core-1.4.8.jar jakarta.annotation-api-2.1.1.
+ jar spring-core-6.0.11.jar spring-boot-starter-jdbc-3.1.2.jar attoparse
+ r-2.0.6.RELEASE.jar tomcat-embed-websocket-10.1.11.jar unbescape-1.1.6.
+ RELEASE.jar spring-boot-starter-json-3.1.2.jar micrometer-commons-1.11.
+ 2.jar spring-boot-starter-logging-3.1.2.jar jackson-core-2.15.2.jar
 
