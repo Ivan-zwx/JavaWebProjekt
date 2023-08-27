@@ -1,0 +1,11 @@
+Sandbox URL:
+https://sandbox.paypal.com
+
+Sandbox Region:
+AT
+
+Email:
+sb-47boc515278312@business.example.com
+
+Password:
+ImTm&95s
